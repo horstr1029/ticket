@@ -2,8 +2,6 @@ import { PageHeader } from "@/components/page-header";
 import { StatsCards } from "@/components/stats-cards";
 import { TicketTable } from "@/components/ticket-table";
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Plus, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { Ticket } from "@/types";
@@ -96,14 +94,14 @@ export default function DashboardPage() {
           </Link>
         }
       />
-      <main className="flex-1 overflow-auto p-6 space-y-6">
+      <main className="flex-1 overflow-auto p-6 space-y-6" style={{ background: "var(--rk-bg)" }}>
         <StatsCards />
 
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-sm font-semibold">Recent Tickets</h2>
-              <Link href="/tickets" className={buttonVariants({ variant: "ghost", size: "sm" }) + " text-xs"}>
+              <h2 className="text-sm font-semibold" style={{ color: "var(--rk-text)" }}>Recent Tickets</h2>
+              <Link href="/tickets" className={buttonVariants({ variant: "ghost", size: "sm" }) + " text-xs"} style={{ color: "var(--rk-text2)" }}>
                 View all <ArrowRight className="size-3 ml-1" />
               </Link>
             </div>
@@ -111,12 +109,10 @@ export default function DashboardPage() {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-sm font-semibold">Activity</h2>
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium">Team Performance</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
+            <h2 className="text-sm font-semibold" style={{ color: "var(--rk-text)" }}>Activity</h2>
+            <div className="rounded-xl border p-4" style={{ background: "var(--rk-surface)", borderColor: "var(--rk-border)" }}>
+              <p className="text-xs font-semibold mb-3" style={{ color: "var(--rk-text2)" }}>Team Performance</p>
+              <div className="space-y-3">
                 {[
                   { name: "Mike Chen", solved: 18, avatar: "MC" },
                   { name: "Lisa Park", solved: 14, avatar: "LP" },
@@ -124,31 +120,30 @@ export default function DashboardPage() {
                   { name: "Ana Torres", solved: 9, avatar: "AT" },
                 ].map((agent) => (
                   <div key={agent.name} className="flex items-center gap-3">
-                    <div className="size-7 rounded-full bg-primary/10 flex items-center justify-center text-[10px] font-medium text-primary">
+                    <div className="size-7 rounded-full flex items-center justify-center text-[10px] font-bold"
+                      style={{ background: "rgba(0,194,255,0.12)", color: "var(--rk-accent)" }}>
                       {agent.avatar}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium truncate">{agent.name}</p>
-                      <div className="mt-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                      <p className="text-xs font-medium truncate" style={{ color: "var(--rk-text)" }}>{agent.name}</p>
+                      <div className="mt-1 h-1 rounded-full overflow-hidden" style={{ background: "var(--rk-border)" }}>
                         <div
-                          className="h-full bg-primary rounded-full"
-                          style={{ width: `${(agent.solved / 20) * 100}%` }}
+                          className="h-full rounded-full"
+                          style={{ width: `${(agent.solved / 20) * 100}%`, background: "var(--rk-accent)" }}
                         />
                       </div>
                     </div>
-                    <span className="text-xs text-muted-foreground tabular-nums">
+                    <span className="text-xs tabular-nums font-medium" style={{ color: "var(--rk-text2)" }}>
                       {agent.solved}
                     </span>
                   </div>
                 ))}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium">By Channel</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
+            <div className="rounded-xl border p-4" style={{ background: "var(--rk-surface)", borderColor: "var(--rk-border)" }}>
+              <p className="text-xs font-semibold mb-3" style={{ color: "var(--rk-text2)" }}>By Channel</p>
+              <div className="space-y-2">
                 {[
                   { channel: "Email", count: 52, pct: 62 },
                   { channel: "Web Widget", count: 21, pct: 25 },
@@ -156,11 +151,11 @@ export default function DashboardPage() {
                   { channel: "API", count: 3, pct: 4 },
                 ].map((row) => (
                   <div key={row.channel} className="flex items-center gap-3 text-xs">
-                    <span className="w-20 text-muted-foreground">{row.channel}</span>
-                    <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
+                    <span className="w-20" style={{ color: "var(--rk-text2)" }}>{row.channel}</span>
+                    <div className="flex-1 h-1 rounded-full overflow-hidden" style={{ background: "var(--rk-border)" }}>
                       <div
-                        className="h-full bg-primary/70 rounded-full"
-                        style={{ width: `${row.pct}%` }}
+                        className="h-full rounded-full"
+                        style={{ width: `${row.pct}%`, background: "var(--rk-accent)" }}
                       />
                     </div>
                     <span className="text-muted-foreground tabular-nums w-6 text-right">
@@ -168,8 +163,8 @@ export default function DashboardPage() {
                     </span>
                   </div>
                 ))}
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </div>
         </div>
       </main>

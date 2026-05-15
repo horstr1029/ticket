@@ -55,19 +55,24 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b border-sidebar-border">
+      <SidebarHeader className="border-b border-sidebar-border py-3">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
               render={
                 <Link href="/dashboard">
-                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                    <Ticket className="size-4" />
+                  <div className="flex aspect-square size-8 items-center justify-center rounded-lg"
+                    style={{ background: "rgba(0,194,255,0.15)", border: "1px solid rgba(0,194,255,0.3)" }}>
+                    <Ticket className="size-4" style={{ color: "var(--rk-accent)" }} />
                   </div>
                   <div className="flex flex-col gap-0.5 leading-none">
-                    <span className="font-semibold text-sidebar-foreground">HelpDesk</span>
-                    <span className="text-xs text-sidebar-foreground/60">Support Platform</span>
+                    <span className="font-bold tracking-wide text-sm" style={{ color: "var(--rk-accent)" }}>
+                      HELPDESK
+                    </span>
+                    <span className="text-[10px]" style={{ color: "var(--rk-text3)" }}>
+                      Support Platform
+                    </span>
                   </div>
                 </Link>
               }
@@ -78,7 +83,10 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/50 uppercase text-[10px] tracking-widest">
+          <SidebarGroupLabel
+            className="text-[10px] uppercase tracking-widest font-semibold"
+            style={{ color: "var(--rk-text3)" }}
+          >
             Main
           </SidebarGroupLabel>
           <SidebarMenu>
@@ -92,18 +100,22 @@ export function AppSidebar() {
                     render={
                       <Link href={item.href} className="flex items-center justify-between w-full">
                         <span className="flex items-center gap-2">
-                          <item.icon className="size-4" />
-                          <span>{item.title}</span>
+                          <item.icon
+                            className="size-4"
+                            style={{ color: isActive ? "var(--rk-accent)" : "var(--rk-text2)" }}
+                          />
+                          <span style={{ color: isActive ? "var(--rk-text)" : "var(--rk-text2)" }}>
+                            {item.title}
+                          </span>
                         </span>
                         {item.badge && (
                           <Badge
                             variant="secondary"
-                            className={cn(
-                              "ml-auto h-5 min-w-5 text-[10px] px-1",
-                              isActive
-                                ? "bg-sidebar-primary text-sidebar-primary-foreground"
-                                : "bg-sidebar-accent text-sidebar-accent-foreground"
-                            )}
+                            className="ml-auto h-4 min-w-4 text-[10px] px-1 border-0"
+                            style={isActive
+                              ? { background: "rgba(0,194,255,0.2)", color: "var(--rk-accent)" }
+                              : { background: "var(--rk-surface2)", color: "var(--rk-text2)" }
+                            }
                           >
                             {item.badge}
                           </Badge>
@@ -118,24 +130,35 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
-          <SidebarGroupLabel className="text-sidebar-foreground/50 uppercase text-[10px] tracking-widest">
+          <SidebarGroupLabel
+            className="text-[10px] uppercase tracking-widest font-semibold"
+            style={{ color: "var(--rk-text3)" }}
+          >
             Administration
           </SidebarGroupLabel>
           <SidebarMenu>
-            {navAdmin.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  isActive={pathname === item.href || pathname.startsWith(item.href + "/")}
-                  tooltip={item.title}
-                  render={
-                    <Link href={item.href}>
-                      <item.icon className="size-4" />
-                      <span>{item.title}</span>
-                    </Link>
-                  }
-                />
-              </SidebarMenuItem>
-            ))}
+            {navAdmin.map((item) => {
+              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+              return (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    isActive={isActive}
+                    tooltip={item.title}
+                    render={
+                      <Link href={item.href}>
+                        <item.icon
+                          className="size-4"
+                          style={{ color: isActive ? "var(--rk-accent)" : "var(--rk-text2)" }}
+                        />
+                        <span style={{ color: isActive ? "var(--rk-text)" : "var(--rk-text2)" }}>
+                          {item.title}
+                        </span>
+                      </Link>
+                    }
+                  />
+                </SidebarMenuItem>
+              );
+            })}
           </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
@@ -146,33 +169,28 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
-                  <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent">
+                  <SidebarMenuButton size="lg">
                     <Avatar className="size-8 rounded-lg">
-                      <AvatarFallback className="rounded-lg bg-sidebar-primary text-sidebar-primary-foreground text-xs">
+                      <AvatarFallback
+                        className="rounded-lg text-xs font-semibold"
+                        style={{ background: "rgba(0,194,255,0.15)", color: "var(--rk-accent)" }}
+                      >
                         JD
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex flex-col gap-0.5 leading-none">
-                      <span className="font-medium text-sidebar-foreground text-sm">John Doe</span>
-                      <span className="text-xs text-sidebar-foreground/60">Admin</span>
+                      <span className="font-medium text-sm" style={{ color: "var(--rk-text)" }}>John Doe</span>
+                      <span className="text-xs" style={{ color: "var(--rk-text3)" }}>Admin</span>
                     </div>
-                    <ChevronDown className="ml-auto size-4 text-sidebar-foreground/60" />
+                    <ChevronDown className="ml-auto size-4" style={{ color: "var(--rk-text3)" }} />
                   </SidebarMenuButton>
                 }
               />
-              <DropdownMenuContent
-                side="top"
-                className="w-[--radix-popper-anchor-width]"
-                align="start"
-              >
-                <DropdownMenuItem render={<Link href="/settings/profile" />}>
-                  Profile
-                </DropdownMenuItem>
-                <DropdownMenuItem render={<Link href="/settings" />}>
-                  Settings
-                </DropdownMenuItem>
+              <DropdownMenuContent side="top" className="w-[--radix-popper-anchor-width]" align="start">
+                <DropdownMenuItem render={<Link href="/settings/profile" />}>Profile</DropdownMenuItem>
+                <DropdownMenuItem render={<Link href="/settings" />}>Settings</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="text-destructive">Sign out</DropdownMenuItem>
+                <DropdownMenuItem variant="destructive">Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </SidebarMenuItem>

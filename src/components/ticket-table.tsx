@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -21,21 +20,20 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { MoreHorizontal, Mail, Globe, Phone, Code } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import type { Ticket } from "@/types";
-import { cn } from "@/lib/utils";
 
-const statusConfig: Record<string, { label: string; className: string }> = {
-  new: { label: "New", className: "bg-blue-50 text-blue-700 border-blue-200" },
-  open: { label: "Open", className: "bg-green-50 text-green-700 border-green-200" },
-  pending: { label: "Pending", className: "bg-amber-50 text-amber-700 border-amber-200" },
-  solved: { label: "Solved", className: "bg-gray-50 text-gray-600 border-gray-200" },
-  closed: { label: "Closed", className: "bg-gray-100 text-gray-500 border-gray-200" },
+const statusConfig: Record<string, { label: string; color: string; bg: string }> = {
+  new:     { label: "New",     color: "#00c2ff", bg: "rgba(0,194,255,0.12)" },
+  open:    { label: "Open",    color: "#10d98a", bg: "rgba(16,217,138,0.12)" },
+  pending: { label: "Pending", color: "#f0b429", bg: "rgba(240,180,41,0.12)" },
+  solved:  { label: "Solved",  color: "#8899b4", bg: "rgba(136,153,180,0.12)" },
+  closed:  { label: "Closed",  color: "#4a5f7a", bg: "rgba(74,95,122,0.12)" },
 };
 
-const priorityConfig: Record<string, { label: string; dot: string }> = {
-  low: { label: "Low", dot: "bg-gray-400" },
-  normal: { label: "Normal", dot: "bg-blue-500" },
-  high: { label: "High", dot: "bg-amber-500" },
-  urgent: { label: "Urgent", dot: "bg-red-500" },
+const priorityConfig: Record<string, { label: string; color: string }> = {
+  low:    { label: "Low",    color: "#4a5f7a" },
+  normal: { label: "Normal", color: "#8899b4" },
+  high:   { label: "High",   color: "#f0b429" },
+  urgent: { label: "Urgent", color: "#ff4757" },
 };
 
 const channelIcons: Record<string, React.ElementType> = {
@@ -51,25 +49,25 @@ interface TicketTableProps {
 
 export function TicketTable({ tickets }: TicketTableProps) {
   return (
-    <div className="rounded-lg border bg-card">
+    <div className="rounded-xl border overflow-hidden" style={{ borderColor: "var(--rk-border)", background: "var(--rk-surface)" }}>
       <Table>
         <TableHeader>
-          <TableRow className="hover:bg-transparent">
-            <TableHead className="w-12 text-center">#</TableHead>
-            <TableHead>Subject</TableHead>
-            <TableHead className="hidden md:table-cell">Requester</TableHead>
-            <TableHead className="hidden lg:table-cell">Assignee</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead className="hidden sm:table-cell">Priority</TableHead>
-            <TableHead className="hidden xl:table-cell">Channel</TableHead>
-            <TableHead className="hidden lg:table-cell">Created</TableHead>
-            <TableHead className="w-10" />
+          <TableRow className="hover:bg-transparent border-b" style={{ borderColor: "var(--rk-border)" }}>
+            {["#", "Subject", "Requester", "Assignee", "Status", "Priority", "Channel", "Created", ""].map((h) => (
+              <TableHead
+                key={h}
+                className={`text-xs font-semibold uppercase tracking-wide ${h === "#" ? "w-12 text-center" : ""} ${["Requester"].includes(h) ? "hidden md:table-cell" : ""} ${["Assignee"].includes(h) ? "hidden lg:table-cell" : ""} ${["Priority"].includes(h) ? "hidden sm:table-cell" : ""} ${["Channel"].includes(h) ? "hidden xl:table-cell" : ""} ${["Created"].includes(h) ? "hidden lg:table-cell" : ""} ${h === "" ? "w-10" : ""}`}
+                style={{ color: "var(--rk-text3)" }}
+              >
+                {h}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
           {tickets.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={9} className="h-32 text-center text-muted-foreground">
+              <TableCell colSpan={9} className="h-32 text-center" style={{ color: "var(--rk-text3)" }}>
                 No tickets found
               </TableCell>
             </TableRow>
@@ -80,27 +78,32 @@ export function TicketTable({ tickets }: TicketTableProps) {
               const ChannelIcon = channelIcons[ticket.channel] ?? Globe;
 
               return (
-                <TableRow key={ticket.id} className="group">
-                  <TableCell className="text-center text-xs text-muted-foreground font-mono">
+                <TableRow
+                  key={ticket.id}
+                  className="group border-b"
+                  style={{ borderColor: "var(--rk-border)" }}
+                >
+                  <TableCell className="text-center font-mono text-xs" style={{ color: "var(--rk-text3)" }}>
                     {ticket.ticketNumber}
                   </TableCell>
                   <TableCell>
                     <Link
                       href={`/tickets/${ticket.id}`}
-                      className="font-medium text-sm hover:text-primary transition-colors line-clamp-1"
+                      className="text-sm font-medium transition-colors line-clamp-1 hover:underline"
+                      style={{ color: "var(--rk-text)" }}
                     >
                       {ticket.subject}
                     </Link>
                     {ticket.tags.length > 0 && (
                       <div className="flex gap-1 mt-1 flex-wrap">
                         {ticket.tags.slice(0, 2).map((tag) => (
-                          <Badge
+                          <span
                             key={tag}
-                            variant="secondary"
-                            className="text-[10px] h-4 px-1 font-normal"
+                            className="text-[10px] px-1.5 py-0.5 rounded"
+                            style={{ background: "var(--rk-surface2)", color: "var(--rk-text3)" }}
                           >
                             {tag}
-                          </Badge>
+                          </span>
                         ))}
                       </div>
                     )}
@@ -108,11 +111,11 @@ export function TicketTable({ tickets }: TicketTableProps) {
                   <TableCell className="hidden md:table-cell">
                     <div className="flex items-center gap-2">
                       <Avatar className="size-6">
-                        <AvatarFallback className="text-[10px]">
+                        <AvatarFallback className="text-[10px]" style={{ background: "var(--rk-surface2)", color: "var(--rk-text2)" }}>
                           {ticket.requester?.name.slice(0, 2).toUpperCase() ?? "??"}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm text-muted-foreground truncate max-w-32">
+                      <span className="text-sm truncate max-w-32" style={{ color: "var(--rk-text2)" }}>
                         {ticket.requester?.name ?? "Unknown"}
                       </span>
                     </div>
@@ -121,39 +124,39 @@ export function TicketTable({ tickets }: TicketTableProps) {
                     {ticket.assignee ? (
                       <div className="flex items-center gap-2">
                         <Avatar className="size-6">
-                          <AvatarFallback className="text-[10px]">
+                          <AvatarFallback className="text-[10px]" style={{ background: "rgba(0,194,255,0.12)", color: "var(--rk-accent)" }}>
                             {ticket.assignee.name.slice(0, 2).toUpperCase()}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm text-muted-foreground truncate max-w-28">
+                        <span className="text-sm truncate max-w-28" style={{ color: "var(--rk-text2)" }}>
                           {ticket.assignee.name}
                         </span>
                       </div>
                     ) : (
-                      <span className="text-xs text-muted-foreground">Unassigned</span>
+                      <span className="text-xs" style={{ color: "var(--rk-text3)" }}>Unassigned</span>
                     )}
                   </TableCell>
                   <TableCell>
-                    <Badge
-                      variant="outline"
-                      className={cn("text-xs font-medium", status.className)}
+                    <span
+                      className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium"
+                      style={{ background: status.bg, color: status.color }}
                     >
                       {status.label}
-                    </Badge>
+                    </span>
                   </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <div className="flex items-center gap-1.5">
-                      <span className={cn("size-1.5 rounded-full", priority.dot)} />
-                      <span className="text-xs text-muted-foreground">{priority.label}</span>
+                      <span className="size-1.5 rounded-full" style={{ background: priority.color }} />
+                      <span className="text-xs" style={{ color: priority.color }}>{priority.label}</span>
                     </div>
                   </TableCell>
                   <TableCell className="hidden xl:table-cell">
-                    <div className="flex items-center gap-1.5 text-muted-foreground">
+                    <div className="flex items-center gap-1.5" style={{ color: "var(--rk-text3)" }}>
                       <ChannelIcon className="size-3.5" />
                       <span className="text-xs capitalize">{ticket.channel}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden lg:table-cell text-xs text-muted-foreground">
+                  <TableCell className="hidden lg:table-cell text-xs" style={{ color: "var(--rk-text3)" }}>
                     {formatDistanceToNow(ticket.createdAt, { addSuffix: true })}
                   </TableCell>
                   <TableCell>
@@ -165,7 +168,7 @@ export function TicketTable({ tickets }: TicketTableProps) {
                             size="icon"
                             className="size-7 opacity-0 group-hover:opacity-100"
                           >
-                            <MoreHorizontal className="size-4" />
+                            <MoreHorizontal className="size-4" style={{ color: "var(--rk-text2)" }} />
                           </Button>
                         }
                       />
@@ -175,9 +178,7 @@ export function TicketTable({ tickets }: TicketTableProps) {
                         </DropdownMenuItem>
                         <DropdownMenuItem>Assign to me</DropdownMenuItem>
                         <DropdownMenuItem>Mark as solved</DropdownMenuItem>
-                        <DropdownMenuItem className="text-destructive">
-                          Close ticket
-                        </DropdownMenuItem>
+                        <DropdownMenuItem variant="destructive">Close ticket</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
