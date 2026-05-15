@@ -21,9 +21,10 @@ model User {
 
   accounts         Account[]
   sessions         Session[]
-  requestedTickets Ticket[]  @relation("requester")
-  assignedTickets  Ticket[]  @relation("assignee")
+  requestedTickets Ticket[]   @relation("requester")
+  assignedTickets  Ticket[]   @relation("assignee")
   comments         Comment[]
+  articles         Article[]
 
   @@map("users")
 }
@@ -77,6 +78,7 @@ model Ticket {
   channel      TicketChannel  @default(web)
   tags         String[]
   slaDeadline  DateTime?
+  slaPolicyId  String?
   solvedAt     DateTime?
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
@@ -85,9 +87,10 @@ model Ticket {
   assigneeId  String?
   groupId     String?
 
-  requester User   @relation("requester", fields: [requesterId], references: [id])
-  assignee  User?  @relation("assignee", fields: [assigneeId], references: [id])
-  group     Group? @relation(fields: [groupId], references: [id])
+  requester User      @relation("requester", fields: [requesterId], references: [id])
+  assignee  User?     @relation("assignee", fields: [assigneeId], references: [id])
+  group     Group?    @relation(fields: [groupId], references: [id])
+  slaPolicy SlaPolicy? @relation(fields: [slaPolicyId], references: [id])
   comments  Comment[]
 
   @@map("tickets")
@@ -142,9 +145,44 @@ model SlaPolicy {
   firstResponseTime Int
   resolutionTime    Int
   businessHoursOnly Boolean  @default(true)
+  isDefault         Boolean  @default(false)
   createdAt         DateTime @default(now())
 
+  tickets Ticket[]
+
   @@map("sla_policies")
+}
+
+model Macro {
+  id       String         @id @default(cuid())
+  name     String
+  body     String
+  subject  String?
+  tags     String[]
+  status   TicketStatus?
+  priority TicketPriority?
+  isActive Boolean        @default(true)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@map("macros")
+}
+
+model Article {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  body        String
+  category    String   @default("General")
+  isPublished Boolean  @default(false)
+  views       Int      @default(0)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  author User @relation(fields: [authorId], references: [id])
+
+  @@map("articles")
 }
 
 enum Role {
