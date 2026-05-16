@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { logout } from "@/lib/actions/auth"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 const navMain = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
@@ -237,6 +238,15 @@ export function AppSidebar({ user }: AppSidebarProps) {
                 <DropdownMenuItem render={<Link href="/settings" />}>
                   Settings
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  render={
+                    <div className="flex items-center justify-between w-full">
+                      <span>Theme</span>
+                      <ThemeToggle />
+                    </div>
+                  }
+                />
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   variant="destructive"

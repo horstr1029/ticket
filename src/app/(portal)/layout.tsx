@@ -4,6 +4,7 @@ import Link from "next/link"
 import { logout } from "@/lib/actions/auth"
 import { Button } from "@/components/ui/button"
 import { Ticket, LogOut, BookOpen } from "lucide-react"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default async function PortalLayout({
   children,
@@ -47,6 +48,7 @@ export default async function PortalLayout({
           <span className="text-xs" style={{ color: "var(--rk-text3)" }}>
             {user.name ?? user.email}
           </span>
+          <ThemeToggle />
           <form action={logout}>
             <Button variant="ghost" size="sm" type="submit" className="h-7 text-xs gap-1">
               <LogOut className="size-3.5" />

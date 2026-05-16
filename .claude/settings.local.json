@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(ssh -o StrictHostKeyChecking=no horstr@192.168.104.35 \"pm2 show helpdesk | grep -E 'script|cwd|root path'\")"
+    ]
+  }
+}

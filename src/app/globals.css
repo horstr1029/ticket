@@ -4,8 +4,62 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ── Light theme (default) ── */
 :root {
-  /* Rotakin brand tokens */
+  --rk-bg: #f0f4f8;
+  --rk-surface: #ffffff;
+  --rk-surface2: #f1f5f9;
+  --rk-border: #e2e8f0;
+  --rk-border2: #cbd5e1;
+  --rk-accent: #0099cc;
+  --rk-gold: #d97706;
+  --rk-green: #059669;
+  --rk-orange: #ea580c;
+  --rk-red: #dc2626;
+  --rk-purple: #7c3aed;
+  --rk-text: #0f172a;
+  --rk-text2: #475569;
+  --rk-text3: #94a3b8;
+
+  --background: #f0f4f8;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0099cc;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #0099cc;
+  --radius: 0.5rem;
+
+  --sidebar: #1e293b;
+  --sidebar-foreground: #e8edf5;
+  --sidebar-primary: #00c2ff;
+  --sidebar-primary-foreground: #0b0f1a;
+  --sidebar-accent: #2d3f5a;
+  --sidebar-accent-foreground: #e8edf5;
+  --sidebar-border: #2d3f5a;
+  --sidebar-ring: #00c2ff;
+
+  --chart-1: #059669;
+  --chart-2: #0099cc;
+  --chart-3: #d97706;
+  --chart-4: #ea580c;
+  --chart-5: #7c3aed;
+}
+
+/* ── Dark theme ── */
+.dark {
   --rk-bg: #0b0f1a;
   --rk-surface: #111827;
   --rk-surface2: #1a2235;
@@ -21,7 +75,6 @@
   --rk-text2: #8899b4;
   --rk-text3: #4a5f7a;
 
-  /* shadcn variables — always dark */
   --background: #0b0f1a;
   --foreground: #e8edf5;
   --card: #111827;
@@ -41,9 +94,7 @@
   --border: #1e2d45;
   --input: #1a2235;
   --ring: #00c2ff;
-  --radius: 0.5rem;
 
-  /* Sidebar tokens */
   --sidebar: #0d1220;
   --sidebar-foreground: #e8edf5;
   --sidebar-primary: #00c2ff;
@@ -53,7 +104,6 @@
   --sidebar-border: #1e2d45;
   --sidebar-ring: #00c2ff;
 
-  /* Charts */
   --chart-1: #10d98a;
   --chart-2: #00c2ff;
   --chart-3: #f0b429;
