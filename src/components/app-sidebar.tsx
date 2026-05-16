@@ -114,7 +114,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         <SidebarGroup>
           <SidebarGroupLabel
             className="text-[10px] uppercase tracking-widest font-semibold"
-            style={{ color: "var(--rk-text3)" }}
+            style={{ color: "rgba(232,237,245,0.45)" }}
           >
             Main
           </SidebarGroupLabel>
@@ -133,12 +133,12 @@ export function AppSidebar({ user }: AppSidebarProps) {
                           <item.icon
                             className="size-4"
                             style={{
-                              color: isActive ? "var(--rk-accent)" : "var(--rk-text2)",
+                              color: isActive ? "var(--rk-accent)" : "rgba(232,237,245,0.7)",
                             }}
                           />
                           <span
                             style={{
-                              color: isActive ? "var(--rk-text)" : "var(--rk-text2)",
+                              color: isActive ? "#e8edf5" : "rgba(232,237,245,0.7)",
                             }}
                           >
                             {item.title}
@@ -156,7 +156,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         <SidebarGroup>
           <SidebarGroupLabel
             className="text-[10px] uppercase tracking-widest font-semibold"
-            style={{ color: "var(--rk-text3)" }}
+            style={{ color: "rgba(232,237,245,0.45)" }}
           >
             Administration
           </SidebarGroupLabel>
@@ -174,12 +174,12 @@ export function AppSidebar({ user }: AppSidebarProps) {
                         <item.icon
                           className="size-4"
                           style={{
-                            color: isActive ? "var(--rk-accent)" : "var(--rk-text2)",
+                            color: isActive ? "var(--rk-accent)" : "rgba(232,237,245,0.7)",
                           }}
                         />
                         <span
                           style={{
-                            color: isActive ? "var(--rk-text)" : "var(--rk-text2)",
+                            color: isActive ? "#e8edf5" : "rgba(232,237,245,0.7)",
                           }}
                         >
                           {item.title}
